@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  fastapi-test:
+    build:
+      context: .
+      dockerfile: Dockerfile-fastapi-test
+    depends_on:
+      - fastapi
+
+  golang-test:
+    build:
+      context: .
+      dockerfile: Dockerfile-golang-test
+    depends_on:
+      - golang
+
+  flask-test:
+    build:
+      context: .
+      dockerfile: Dockerfile-flask-test
+    depends_on:
+      - flask
+
+  django-test:
+    build:
+      context: .
+      dockerfile: Dockerfile-django-test
+    depends_on:
+      - django
+

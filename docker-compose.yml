@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  fastapi:
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.8
+    ports:
+      - "8000:80"
+    volumes:
+      - ./fastapi:/app
+    environment:
+      - MODULE_NAME=main
+      - VARIABLE_NAME=app
+
+  golang:
+    image: golang:latest
+    command: go run /app/main.go
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./golang:/app
+
+  flask:
+    image: python:3.8
+    command: python /app/app.py
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./flask:/app
+
+  django:
+    image: python:3.8
+    command: python /app/manage.py runserver 0.0.0.0:8003
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./django:/app
+
+
