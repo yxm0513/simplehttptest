@@ -4,7 +4,7 @@ services:
   fastapi:
     image: tiangolo/uvicorn-gunicorn-fastapi:python3.8
     ports:
-      - "8000:80"
+      - "3201:80"
     volumes:
       - ./fastapi:/app
     environment:
@@ -15,24 +15,27 @@ services:
     image: golang:latest
     command: go run /app/main.go
     ports:
-      - "8001:8001"
+      - "3202:8001"
     volumes:
       - ./golang:/app
+    privileged: true
 
   flask:
     image: python:3.8
-    command: python /app/app.py
+    command: >
+      sh -c "pip install flask && python /app/app.py"
     ports:
-      - "8002:8002"
+      - "3203:8002"
     volumes:
       - ./flask:/app
+    privileged: true
 
   django:
     image: python:3.8
-    command: python /app/manage.py runserver 0.0.0.0:8003
+    command: >
+      sh -c "pip install django && python /app/manage.py runserver 0.0.0.0:8003"
     ports:
-      - "8003:8003"
+      - "3204:8003"
     volumes:
       - ./django:/app
-
-
+    privileged: true

@@ -1,31 +1,9 @@
-version: '3'
+version: '3.9'
 
 services:
-  fastapi-test:
-    build:
-      context: .
-      dockerfile: Dockerfile-fastapi-test
-    depends_on:
-      - fastapi
-
-  golang-test:
-    build:
-      context: .
-      dockerfile: Dockerfile-golang-test
-    depends_on:
-      - golang
-
-  flask-test:
-    build:
-      context: .
-      dockerfile: Dockerfile-flask-test
-    depends_on:
-      - flask
-
-  django-test:
-    build:
-      context: .
-      dockerfile: Dockerfile-django-test
-    depends_on:
-      - django
-
+    k6test:
+         image: loadimpact/k6:latest
+         command: ["sh", "-c", "bash /k6/k6_test.sh"]
+         volumes:
+             - ./:/k6
+         network_mode: "host"
